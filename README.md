@@ -6,7 +6,7 @@
 # Install
 
 ```sh
-npm install --save-dev @natade-jp/ntcolor
+npm install --save-dev ntcolor
 ```
 
 # Docs
@@ -16,5 +16,5 @@ https://natade-jp.github.io/js-ntcolor/
 # Example
 
 ```javascript
-import NTColor from "@natade-jp/ntcolor";
+import NTColor from "ntcolor";
 ```

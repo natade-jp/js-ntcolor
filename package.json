@@ -1,5 +1,5 @@
 {
-	"name": "@natade-jp/ntcolor",
+	"name": "ntcolor",
 	"version": "0.0.1",
 	"description": "Library for using color information in JavaScript.",
 	"keywords": [
