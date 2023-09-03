@@ -9,6 +9,10 @@
 npm install --save-dev @natade-jp/ntcolor
 ```
 
+# Docs
+
+https://natade-jp.github.io/js-ntcolor/
+
 # Example
 
 ```javascript
