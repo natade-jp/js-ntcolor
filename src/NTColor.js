@@ -22,25 +22,25 @@ export default class NTColor {
 		 * 赤色成分 0...1
 		 * @types {number}
 		 */
-		this.r = 0.0;
+		this._r = 0.0;
 
 		/**
 		 * 緑色成分 0...1
 		 * @types {number}
 		 */
-		this.g = 0.0;
+		this._g = 0.0;
 
 		/**
 		 * 青色成分 0...1
 		 * @types {number}
 		 */
-		this.b = 0.0;
+		this._b = 0.0;
 
 		/**
 		 * 透明度成分 0...1
 		 * @types {number}
 		 */
-		this.a = 1.0;
+		this._a = 1.0;
 	}
 
 	/**
@@ -49,10 +49,10 @@ export default class NTColor {
 	 */
 	limit() {
 		const color = new NTColor();
-		color.r = NTColor._limit(this.r);
-		color.g = NTColor._limit(this.g);
-		color.b = NTColor._limit(this.b);
-		color.a = NTColor._limit(this.a);
+		color._r = NTColor._limit(this._r);
+		color._g = NTColor._limit(this._g);
+		color._b = NTColor._limit(this._b);
+		color._a = NTColor._limit(this._a);
 		return color;
 	}
 
@@ -62,10 +62,10 @@ export default class NTColor {
 	 */
 	bake() {
 		const color = new NTColor();
-		color.r = this.r * this.a;
-		color.g = this.g * this.a;
-		color.b = this.b * this.a;
-		color.a = 1.0;
+		color._r = this._r * this._a;
+		color._g = this._g * this._a;
+		color._b = this._b * this._a;
+		color._a = 1.0;
 		return color.limit();
 	}
 
@@ -79,7 +79,12 @@ export default class NTColor {
 		if (!(x instanceof NTColor)) {
 			throw "IllegalArgumentException";
 		}
-		return NTColor.newColorNormalizedRGB(this.r + x.r * x.a, this.g + x.g * x.a, this.b + x.b * x.a, this.a);
+		return NTColor.newColorNormalizedRGB(
+			this._r + x._r * x._a,
+			this._g + x._g * x._a,
+			this._b + x._b * x._a,
+			this._a
+		);
 	}
 
 	/**
@@ -92,14 +97,14 @@ export default class NTColor {
 		if (!(x instanceof NTColor)) {
 			throw "IllegalArgumentException";
 		}
-		const r = Math.min(this.r, x.r);
-		const g = Math.min(this.g, x.g);
-		const b = Math.min(this.b, x.b);
+		const r = Math.min(this._r, x._r);
+		const g = Math.min(this._g, x._g);
+		const b = Math.min(this._b, x._b);
 		return NTColor.newColorNormalizedRGB(
-			NTColor._mix(this.r, r, x.a),
-			NTColor._mix(this.g, g, x.a),
-			NTColor._mix(this.b, b, x.a),
-			this.a
+			NTColor._mix(this._r, r, x._a),
+			NTColor._mix(this._g, g, x._a),
+			NTColor._mix(this._b, b, x._a),
+			this._a
 		);
 	}
 
@@ -110,9 +115,9 @@ export default class NTColor {
 	 */
 	mul(x) {
 		if (x instanceof NTColor) {
-			return NTColor.newColorNormalizedRGB(this.r * x.r, this.g * x.g, this.b * x.b, this.a * x.a);
+			return NTColor.newColorNormalizedRGB(this._r * x._r, this._g * x._g, this._b * x._b, this._a * x._a);
 		} else if (typeof x === "number") {
-			return NTColor.newColorNormalizedRGB(this.r * x, this.g * x, this.b * x, this.a);
+			return NTColor.newColorNormalizedRGB(this._r * x, this._g * x, this._b * x, this._a);
 		} else {
 			throw "IllegalArgumentException";
 		}
@@ -124,11 +129,25 @@ export default class NTColor {
 	 */
 	clone() {
 		const color = new NTColor();
-		color.r = this.r;
-		color.g = this.g;
-		color.b = this.b;
-		color.a = this.a;
+		color._r = this._r;
+		color._g = this._g;
+		color._b = this._b;
+		color._a = this._a;
 		return color;
+	}
+
+	/**
+	 * オブジェクトを比較する
+	 * @param {NTColor} x
+	 * @returns {boolean}
+	 */
+	equals(x) {
+		return (
+			NTColor._equals(this._r, x._r) &&
+			NTColor._equals(this._g, x._g) &&
+			NTColor._equals(this._b, x._b) &&
+			NTColor._equals(this._a, x._a)
+		);
 	}
 
 	/**
@@ -136,7 +155,7 @@ export default class NTColor {
 	 * @returns {string}
 	 */
 	toString() {
-		return "NTColor[" + this.getCSSHex() + ", " + this.getCSS255() + ", " + this.getCSSPercent() + "]";
+		return "NTColor[" + this.toCSSHex() + ", " + this.toCSS255() + ", " + this.toCSSPercent() + "]";
 	}
 
 	/**
@@ -159,6 +178,18 @@ export default class NTColor {
 	 */
 	static _limit(x) {
 		return Math.max(Math.min(x, 1.0), 0.0);
+	}
+
+	/**
+	 * 指定した値を比較する
+	 * @param {number} x
+	 * @param {number} y
+	 * @returns {boolean}
+	 * @private
+	 */
+	static _equals(x, y) {
+		const tolerance = Number.EPSILON;
+		return Math.abs(x - y) < tolerance;
 	}
 
 	/**
@@ -187,6 +218,17 @@ export default class NTColor {
 	}
 
 	/**
+	 * 少数3桁程度の固定小数点文字列を取得する
+	 * @param {number} x
+	 * @returns {string}
+	 * @private
+	 */
+	static _f(x) {
+		const i = Math.trunc(x);
+		return i.toString() + "." + Math.round((x - i) * 1000);
+	}
+
+	/**
 	 * 内部のデータをRGBAで書き換える
 	 * @param {number} r
 	 * @param {number} g
@@ -196,10 +238,10 @@ export default class NTColor {
 	 * @private
 	 */
 	_setRGB(r, g, b, a) {
-		this.r = r;
-		this.g = g;
-		this.b = b;
-		if (a) this.a = a;
+		this._r = r;
+		this._g = g;
+		this._b = b;
+		if (a !== undefined) this._a = a;
 		return this;
 	}
 
@@ -215,33 +257,33 @@ export default class NTColor {
 	_setHSV(h, s, v, a) {
 		let i, f;
 
-		this.r = v;
-		this.g = v;
-		this.b = v;
-		if (a) this.a = a;
+		this._r = v;
+		this._g = v;
+		this._b = v;
+		if (a) this._a = a;
 
 		if (s > 0.0) {
 			h *= 6.0;
 			i = ~~Math.floor(h);
 			f = h - i;
 			if (i === 0) {
-				this.g *= 1.0 - s * (1.0 - f);
-				this.b *= 1.0 - s;
+				this._g *= 1.0 - s * (1.0 - f);
+				this._b *= 1.0 - s;
 			} else if (i === 1) {
-				this.r *= 1.0 - s * f;
-				this.b *= 1.0 - s;
+				this._r *= 1.0 - s * f;
+				this._b *= 1.0 - s;
 			} else if (i === 2) {
-				this.r *= 1.0 - s;
-				this.b *= 1.0 - s * (1.0 - f);
+				this._r *= 1.0 - s;
+				this._b *= 1.0 - s * (1.0 - f);
 			} else if (i === 3) {
-				this.r *= 1.0 - s;
-				this.g *= 1.0 - s * f;
+				this._r *= 1.0 - s;
+				this._g *= 1.0 - s * f;
 			} else if (i === 4) {
-				this.r *= 1.0 - s * (1.0 - f);
-				this.g *= 1.0 - s;
+				this._r *= 1.0 - s * (1.0 - f);
+				this._g *= 1.0 - s;
 			} else if (i === 5) {
-				this.g *= 1.0 - s;
-				this.b *= 1.0 - s * f;
+				this._g *= 1.0 - s;
+				this._b *= 1.0 - s * f;
 			}
 		}
 		return this;
@@ -257,12 +299,12 @@ export default class NTColor {
 	 * @private
 	 */
 	_setHSL(h, s, l, a) {
-		if (a) this.a = a;
+		if (a) this._a = a;
 
 		if (s === 0.0) {
-			this.r = 0.0;
-			this.g = 0.0;
-			this.b = 0.0;
+			this._r = 0.0;
+			this._g = 0.0;
+			this._b = 0.0;
 			return this;
 		}
 
@@ -280,29 +322,29 @@ export default class NTColor {
 		const f = h - i;
 
 		if (i === 0) {
-			this.r = max;
-			this.g = max - delta * (1.0 - f);
-			this.b = min;
+			this._r = max;
+			this._g = max - delta * (1.0 - f);
+			this._b = min;
 		} else if (i === 1) {
-			this.r = min + delta * (1.0 - f);
-			this.g = max;
-			this.b = min;
+			this._r = min + delta * (1.0 - f);
+			this._g = max;
+			this._b = min;
 		} else if (i === 2) {
-			this.r = min;
-			this.g = max;
-			this.b = max - delta * (1.0 - f);
+			this._r = min;
+			this._g = max;
+			this._b = max - delta * (1.0 - f);
 		} else if (i === 3) {
-			this.r = min;
-			this.g = min + delta * (1.0 - f);
-			this.b = max;
+			this._r = min;
+			this._g = min + delta * (1.0 - f);
+			this._b = max;
 		} else if (i === 4) {
-			this.r = max - delta * (1.0 - f);
-			this.g = min;
-			this.b = max;
+			this._r = max - delta * (1.0 - f);
+			this._g = min;
+			this._b = max;
 		} else if (i === 5) {
-			this.r = max;
-			this.g = min;
-			this.b = min + delta * (1.0 - f);
+			this._r = max;
+			this._g = min;
+			this._b = min + delta * (1.0 - f);
 		}
 
 		return this;
@@ -315,10 +357,10 @@ export default class NTColor {
 	 */
 	_getRGB() {
 		return {
-			r: this.r,
-			g: this.g,
-			b: this.b,
-			a: this.a
+			r: this._r,
+			g: this._g,
+			b: this._b,
+			a: this._a
 		};
 	}
 
@@ -328,8 +370,8 @@ export default class NTColor {
 	 * @private
 	 */
 	_getHSV() {
-		const max = Math.max(this.r, this.g, this.b);
-		const min = Math.min(this.r, this.g, this.b);
+		const max = Math.max(this._r, this._g, this._b);
+		const min = Math.min(this._r, this._g, this._b);
 		const delta = max - min;
 
 		let h = 0;
@@ -341,18 +383,18 @@ export default class NTColor {
 		}
 
 		if (delta === 0.0) {
-			return { h: h, s: s, v: v, a: this.a };
+			return { h: h, s: s, v: v, a: this._a };
 		}
 
-		if (max === this.r) {
-			h = (this.g - this.b) / delta;
+		if (max === this._r) {
+			h = (this._g - this._b) / delta;
 			if (h < 0.0) {
 				h += 6.0;
 			}
-		} else if (max === this.g) {
-			h = 2.0 + (this.b - this.r) / delta;
+		} else if (max === this._g) {
+			h = 2.0 + (this._b - this._r) / delta;
 		} else {
-			h = 4.0 + (this.r - this.g) / delta;
+			h = 4.0 + (this._r - this._g) / delta;
 		}
 		h /= 6.0;
 
@@ -360,7 +402,7 @@ export default class NTColor {
 			h: h,
 			s: s,
 			v: v,
-			a: this.a
+			a: this._a
 		};
 	}
 
@@ -370,14 +412,14 @@ export default class NTColor {
 	 * @private
 	 */
 	_getHSL() {
-		const max = Math.max(this.r, this.g, this.b);
-		const min = Math.min(this.r, this.g, this.b);
+		const max = Math.max(this._r, this._g, this._b);
+		const min = Math.min(this._r, this._g, this._b);
 
 		const l = (max + min) * 0.5;
 		const delta = max - min;
 
 		if (delta === 0) {
-			return { h: 0, l: l, s: 0, a: this.a };
+			return { h: 0, l: l, s: 0, a: this._a };
 		}
 
 		let s;
@@ -388,15 +430,15 @@ export default class NTColor {
 		}
 
 		let h;
-		if (max === this.r) {
-			h = (this.g - this.b) / delta;
+		if (max === this._r) {
+			h = (this._g - this._b) / delta;
 			if (h < 0.0) {
 				h += 6.0;
 			}
-		} else if (max === this.g) {
-			h = 2.0 + (this.b - this.r) / delta;
+		} else if (max === this._g) {
+			h = 2.0 + (this._b - this._r) / delta;
 		} else {
-			h = 4.0 + (this.r - this.g) / delta;
+			h = 4.0 + (this._r - this._g) / delta;
 		}
 		h /= 6.0;
 
@@ -404,7 +446,7 @@ export default class NTColor {
 			h: h,
 			s: s,
 			l: l,
-			a: this.a
+			a: this._a
 		};
 	}
 
@@ -412,7 +454,7 @@ export default class NTColor {
 	 * 0...1 に正規化された色を取得する
 	 * @returns {{r: number, g: number, b: number, a: number}}
 	 */
-	getNormalizedRGB() {
+	toNormalizedRGB() {
 		return this._getRGB();
 	}
 
@@ -420,12 +462,12 @@ export default class NTColor {
 	 * 0...255 に正規化された色を取得する
 	 * @returns {{r: number, g: number, b: number, a: number}}
 	 */
-	getRGB() {
+	toRGB() {
 		return {
-			r: Math.round(this.r * 255.0),
-			g: Math.round(this.g * 255.0),
-			b: Math.round(this.b * 255.0),
-			a: Math.round(this.a * 255.0)
+			r: Math.round(this._r * 255.0),
+			g: Math.round(this._g * 255.0),
+			b: Math.round(this._b * 255.0),
+			a: Math.round(this._a * 255.0)
 		};
 	}
 
@@ -433,11 +475,11 @@ export default class NTColor {
 	 * 0x00RRGGBB の値を取得する
 	 * @returns {number}
 	 */
-	getRRGGBB() {
+	toRRGGBB() {
 		return (
-			(Math.round(255.0 * NTColor._limit(this.r)) << 16) |
-			(Math.round(255.0 * NTColor._limit(this.g)) << 8) |
-			Math.round(255.0 * NTColor._limit(this.b))
+			(Math.round(255.0 * NTColor._limit(this._r)) << 16) |
+			(Math.round(255.0 * NTColor._limit(this._g)) << 8) |
+			Math.round(255.0 * NTColor._limit(this._b))
 		);
 	}
 
@@ -445,12 +487,12 @@ export default class NTColor {
 	 * 0xAARRGGBB の値を取得する
 	 * @returns {number}
 	 */
-	getAARRGGBB() {
+	toAARRGGBB() {
 		return (
-			(Math.round(255.0 * NTColor._limit(this.a)) << 24) |
-			(Math.round(255.0 * NTColor._limit(this.r)) << 16) |
-			(Math.round(255.0 * NTColor._limit(this.g)) << 8) |
-			Math.round(255.0 * NTColor._limit(this.b))
+			Math.round(255.0 * NTColor._limit(this._a)) * 0x1000000 +
+			(Math.round(255.0 * NTColor._limit(this._r)) << 16) +
+			(Math.round(255.0 * NTColor._limit(this._g)) << 8) +
+			Math.round(255.0 * NTColor._limit(this._b))
 		);
 	}
 
@@ -459,7 +501,7 @@ export default class NTColor {
 	 * @returns {{h: number, s: number, v: number, a: number}}
 	 * @private
 	 */
-	getNormalizedHSV() {
+	toNormalizedHSV() {
 		return this._getHSV();
 	}
 
@@ -468,8 +510,8 @@ export default class NTColor {
 	 * @returns {{h: number, s: number, v: number, a: number}}
 	 * @private
 	 */
-	getHSV() {
-		const color = this.getNormalizedHSV();
+	toHSV() {
+		const color = this.toNormalizedHSV();
 		color.h = Math.round(color.h * 360.0);
 		color.s = Math.round(color.s * 255.0);
 		color.v = Math.round(color.v * 255.0);
@@ -482,7 +524,7 @@ export default class NTColor {
 	 * @returns {{h: number, s: number, l: number, a: number}}
 	 * @private
 	 */
-	getNormalizedHSL() {
+	toNormalizedHSL() {
 		return this._getHSL();
 	}
 
@@ -490,8 +532,8 @@ export default class NTColor {
 	 * 0...255 の HSL の値を取得する。ただし色相は 0...359 とする。
 	 * @returns {{h: number, s: number, l: number, a: number}}
 	 */
-	getHSL() {
-		const color = this.getNormalizedHSL();
+	toHSL() {
+		const color = this.toNormalizedHSL();
 		color.h = Math.round(color.h * 360.0);
 		color.s = Math.round(color.s * 255.0);
 		color.l = Math.round(color.l * 255.0);
@@ -503,32 +545,32 @@ export default class NTColor {
 	 * 0...255 の赤成分
 	 * @returns {number}
 	 */
-	getRed() {
-		return Math.round(this.r * 255.0);
+	get r() {
+		return Math.round(this._r * 255.0);
 	}
 
 	/**
 	 * 0...255 の緑成分
 	 * @returns {number}
 	 */
-	getGreen() {
-		return Math.round(this.g * 255.0);
+	get g() {
+		return Math.round(this._g * 255.0);
 	}
 
 	/**
 	 * 0...255 の青成分
 	 * @returns {number}
 	 */
-	getBlue() {
-		return Math.round(this.b * 255.0);
+	get b() {
+		return Math.round(this._b * 255.0);
 	}
 
 	/**
 	 * 0...255 のアルファ成分
 	 * @returns {number}
 	 */
-	getAlpha() {
-		return Math.round(this.b * 255.0);
+	get a() {
+		return Math.round(this._b * 255.0);
 	}
 
 	/**
@@ -553,21 +595,21 @@ export default class NTColor {
 	 * CSSで使用できる16進数の色情報のテキストを取得する
 	 * @returns {string}
 	 */
-	getCSSHex() {
-		if (this.a === 1.0) {
+	toCSSHex() {
+		if (NTColor._equals(this._a, 1.0)) {
 			return (
 				"#" +
-				NTColor._hex(NTColor._limit(this.r)) +
-				NTColor._hex(NTColor._limit(this.g)) +
-				NTColor._hex(NTColor._limit(this.b))
+				NTColor._hex(NTColor._limit(this._r)) +
+				NTColor._hex(NTColor._limit(this._g)) +
+				NTColor._hex(NTColor._limit(this._b))
 			);
 		} else {
 			return (
 				"#" +
-				NTColor._hex(NTColor._limit(this.a)) +
-				NTColor._hex(NTColor._limit(this.r)) +
-				NTColor._hex(NTColor._limit(this.g)) +
-				NTColor._hex(NTColor._limit(this.b))
+				NTColor._hex(NTColor._limit(this._a)) +
+				NTColor._hex(NTColor._limit(this._r)) +
+				NTColor._hex(NTColor._limit(this._g)) +
+				NTColor._hex(NTColor._limit(this._b))
 			);
 		}
 	}
@@ -576,27 +618,27 @@ export default class NTColor {
 	 * CSSで使用できる 0...1 のrgb/rgbaの色情報のテキストを取得する
 	 * @returns {string}
 	 */
-	getCSS255() {
-		if (this.a === 1.0) {
+	toCSS255() {
+		if (NTColor._equals(this._a, 1.0)) {
 			return (
 				"rgb(" +
-				Math.round(NTColor._limit(this.r) * 255) +
+				Math.round(NTColor._limit(this._r) * 255) +
 				"," +
-				Math.round(NTColor._limit(this.g) * 255) +
+				Math.round(NTColor._limit(this._g) * 255) +
 				"," +
-				Math.round(NTColor._limit(this.b) * 255) +
+				Math.round(NTColor._limit(this._b) * 255) +
 				")"
 			);
 		} else {
 			return (
 				"rgba(" +
-				Math.round(NTColor._limit(this.r) * 255) +
+				Math.round(NTColor._limit(this._r) * 255) +
 				"," +
-				Math.round(NTColor._limit(this.g) * 255) +
+				Math.round(NTColor._limit(this._g) * 255) +
 				"," +
-				Math.round(NTColor._limit(this.b) * 255) +
+				Math.round(NTColor._limit(this._b) * 255) +
 				"," +
-				this.a +
+				NTColor._f(this._a) +
 				")"
 			);
 		}
@@ -606,27 +648,27 @@ export default class NTColor {
 	 * CSSで使用できるパーセンテージのrgb/rgbaの色情報のテキストを取得する
 	 * @returns {string}
 	 */
-	getCSSPercent() {
-		if (this.a === 1.0) {
+	toCSSPercent() {
+		if (NTColor._equals(this._a, 1.0)) {
 			return (
 				"rgb(" +
-				Math.round(NTColor._limit(this.r) * 100) +
+				Math.round(NTColor._limit(this._r) * 100) +
 				"%," +
-				Math.round(NTColor._limit(this.g) * 100) +
+				Math.round(NTColor._limit(this._g) * 100) +
 				"%," +
-				Math.round(NTColor._limit(this.b) * 100) +
+				Math.round(NTColor._limit(this._b) * 100) +
 				"%)"
 			);
 		} else {
 			return (
 				"rgba(" +
-				Math.round(NTColor._limit(this.r) * 100) +
+				Math.round(NTColor._limit(this._r) * 100) +
 				"%," +
-				Math.round(NTColor._limit(this.g) * 100) +
+				Math.round(NTColor._limit(this._g) * 100) +
 				"%," +
-				Math.round(NTColor._limit(this.b) * 100) +
+				Math.round(NTColor._limit(this._b) * 100) +
 				"%," +
-				Math.round(NTColor._limit(this.a) * 100) +
+				Math.round(NTColor._limit(this._a) * 100) +
 				"%)"
 			);
 		}
@@ -639,7 +681,7 @@ export default class NTColor {
 	 */
 	setAlpha(a) {
 		const color = this.clone();
-		color.a = a;
+		color._a = a;
 		return color;
 	}
 
@@ -668,10 +710,10 @@ export default class NTColor {
 		if (arguments.length === 1) {
 			if (typeof color_or_r === "object") {
 				if (!Array.isArray(color_or_r)) {
-					if (color_or_r.r) in_r = color_or_r.r;
-					if (color_or_r.g) in_g = color_or_r.g;
-					if (color_or_r.b) in_b = color_or_r.b;
-					if (color_or_r.a) in_a = color_or_r.a;
+					if (color_or_r.r !== undefined) in_r = color_or_r.r;
+					if (color_or_r.g !== undefined) in_g = color_or_r.g;
+					if (color_or_r.b !== undefined) in_b = color_or_r.b;
+					if (color_or_r.a !== undefined) in_a = color_or_r.a;
 				} else {
 					if (color_or_r.length >= 3) {
 						in_r = color_or_r[0];
@@ -719,15 +761,15 @@ export default class NTColor {
 				in_r = (color_or_aarrggbb >> 16) & 0xff;
 				in_g = (color_or_aarrggbb >> 8) & 0xff;
 				in_b = color_or_aarrggbb & 0xff;
-				if (g_or_is_load_alpha) {
+				if (color_or_aarrggbb > 0xffffff || g_or_is_load_alpha) {
 					in_a = (color_or_aarrggbb >> 24) & 0xff;
 				}
 			} else if (typeof color_or_aarrggbb === "object") {
 				if (!Array.isArray(color_or_aarrggbb)) {
-					if (color_or_aarrggbb.r) in_r = color_or_aarrggbb.r;
-					if (color_or_aarrggbb.g) in_g = color_or_aarrggbb.g;
-					if (color_or_aarrggbb.b) in_b = color_or_aarrggbb.b;
-					if (color_or_aarrggbb.a) in_a = color_or_aarrggbb.a;
+					if (color_or_aarrggbb.r !== undefined) in_r = color_or_aarrggbb.r;
+					if (color_or_aarrggbb.g !== undefined) in_g = color_or_aarrggbb.g;
+					if (color_or_aarrggbb.b !== undefined) in_b = color_or_aarrggbb.b;
+					if (color_or_aarrggbb.a !== undefined) in_a = color_or_aarrggbb.a;
 				} else {
 					if (color_or_aarrggbb.length >= 3) {
 						in_r = color_or_aarrggbb[0];
@@ -780,10 +822,10 @@ export default class NTColor {
 		if (arguments.length === 1) {
 			if (typeof color_or_h === "object") {
 				if (!Array.isArray(color_or_h)) {
-					if (color_or_h.h) in_h = color_or_h.h;
-					if (color_or_h.s) in_s = color_or_h.s;
-					if (color_or_h.v) in_v = color_or_h.v;
-					if (color_or_h.a) in_a = color_or_h.a;
+					if (color_or_h.h !== undefined) in_h = color_or_h.h;
+					if (color_or_h.s !== undefined) in_s = color_or_h.s;
+					if (color_or_h.v !== undefined) in_v = color_or_h.v;
+					if (color_or_h.a !== undefined) in_a = color_or_h.a;
 				} else {
 					if (color_or_h.length >= 3) {
 						in_h = color_or_h[0];
@@ -831,10 +873,10 @@ export default class NTColor {
 		if (arguments.length <= 2) {
 			if (typeof color_or_h === "object") {
 				if (!Array.isArray(color_or_h)) {
-					if (color_or_h.h) in_h = color_or_h.h;
-					if (color_or_h.s) in_s = color_or_h.s;
-					if (color_or_h.v) in_v = color_or_h.v;
-					if (color_or_h.a) in_a = color_or_h.a;
+					if (color_or_h.h !== undefined) in_h = color_or_h.h;
+					if (color_or_h.s !== undefined) in_s = color_or_h.s;
+					if (color_or_h.v !== undefined) in_v = color_or_h.v;
+					if (color_or_h.a !== undefined) in_a = color_or_h.a;
 				} else {
 					if (color_or_h.length >= 3) {
 						in_h = color_or_h[0];
@@ -884,10 +926,10 @@ export default class NTColor {
 		if (arguments.length === 1) {
 			if (typeof color_or_h === "object") {
 				if (!Array.isArray(color_or_h)) {
-					if (color_or_h.h) in_h = color_or_h.h;
-					if (color_or_h.s) in_s = color_or_h.s;
-					if (color_or_h.l) in_l = color_or_h.l;
-					if (color_or_h.a) in_a = color_or_h.a;
+					if (color_or_h.h !== undefined) in_h = color_or_h.h;
+					if (color_or_h.s !== undefined) in_s = color_or_h.s;
+					if (color_or_h.l !== undefined) in_l = color_or_h.l;
+					if (color_or_h.a !== undefined) in_a = color_or_h.a;
 				} else {
 					if (color_or_h.length >= 3) {
 						in_h = color_or_h[0];
@@ -935,10 +977,10 @@ export default class NTColor {
 		if (arguments.length <= 2) {
 			if (typeof color_or_h === "object") {
 				if (!Array.isArray(color_or_h)) {
-					if (color_or_h.h) in_h = color_or_h.h;
-					if (color_or_h.s) in_s = color_or_h.s;
-					if (color_or_h.l) in_l = color_or_h.l;
-					if (color_or_h.a) in_a = color_or_h.a;
+					if (color_or_h.h !== undefined) in_h = color_or_h.h;
+					if (color_or_h.s !== undefined) in_s = color_or_h.s;
+					if (color_or_h.l !== undefined) in_l = color_or_h.l;
+					if (color_or_h.a !== undefined) in_a = color_or_h.a;
 				} else {
 					if (color_or_h.length >= 3) {
 						in_h = color_or_h[0];
