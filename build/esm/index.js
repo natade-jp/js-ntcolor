@@ -9,7 +9,7 @@
  */
 
 /**
- * 1職の色情報を扱うクラス (immutable)
+ * 色情報を扱うクラス (immutable)
  */
 class NTColor {
 	/**
@@ -19,32 +19,32 @@ class NTColor {
 		// 中身は 0 ~ 1に正規化した値とする
 
 		/**
-		 * 赤色成分 0...1
+		 * 赤色成分 [0.0,1.0]
 		 * @types {number}
 		 */
 		this._r = 0.0;
 
 		/**
-		 * 緑色成分 0...1
+		 * 緑色成分 [0.0,1.0]
 		 * @types {number}
 		 */
 		this._g = 0.0;
 
 		/**
-		 * 青色成分 0...1
+		 * 青色成分 [0.0,1.0]
 		 * @types {number}
 		 */
 		this._b = 0.0;
 
 		/**
-		 * 透明度成分 0...1
+		 * 透明度成分 [0.0,1.0]
 		 * @types {number}
 		 */
 		this._a = 1.0;
 	}
 
 	/**
-	 * 色を表示できる範囲内に収める
+	 * 色を表示できる範囲内 [0.0,1.0] に収める
 	 * @returns {NTColor}
 	 */
 	limit() {
@@ -70,7 +70,7 @@ class NTColor {
 	}
 
 	/**
-	 * 加法混色でミックスする
+	 * 各色成分に加法混色を行う
 	 * @param {NTColor} x
 	 * @returns {NTColor}
 	 */
@@ -88,7 +88,7 @@ class NTColor {
 	}
 
 	/**
-	 * 減法混色でミックスする
+	 * 各色成分に減法混色を行う
 	 * @param {NTColor} x
 	 * @returns {NTColor}
 	 */
@@ -109,7 +109,7 @@ class NTColor {
 	}
 
 	/**
-	 * 各色成分を掛け算する
+	 * 各色成分に掛け算を行う
 	 * @param {NTColor|number} x
 	 * @returns {NTColor}
 	 */
@@ -159,7 +159,7 @@ class NTColor {
 	}
 
 	/**
-	 * 線形補間する
+	 * `v0 + (v1 - v0) * x` で線形補間する
 	 * @param {number} v0
 	 * @param {number} v1
 	 * @param {number} x
@@ -171,7 +171,7 @@ class NTColor {
 	}
 
 	/**
-	 * 指定した値を0...1の範囲にする
+	 * 指定した値を [0.0,1.0] の範囲にする
 	 * @param {number} x
 	 * @returns {number}
 	 * @private
@@ -223,17 +223,17 @@ class NTColor {
 	 * @returns {string}
 	 * @private
 	 */
-	static _f(x) {
+	static _ftos(x) {
 		const i = Math.trunc(x);
 		return i.toString() + "." + Math.round((x - i) * 1000);
 	}
 
 	/**
-	 * 内部のデータをRGBAで書き換える
-	 * @param {number} r
-	 * @param {number} g
-	 * @param {number} b
-	 * @param {number} [a]
+	 * 内部のデータを RGBA で書き換える
+	 * @param {number} r [0.0,1.0]
+	 * @param {number} g [0.0,1.0]
+	 * @param {number} b [0.0,1.0]
+	 * @param {number} [a] [0.0,1.0]
 	 * @returns {NTColor}
 	 * @private
 	 */
@@ -246,11 +246,11 @@ class NTColor {
 	}
 
 	/**
-	 * 内部のデータをhsvaで書き換える
-	 * @param {number} h
-	 * @param {number} s
-	 * @param {number} v
-	 * @param {number} [a]
+	 * 内部のデータを HSVA で書き換える
+	 * @param {number} h [0.0,1.0]
+	 * @param {number} s [0.0,1.0]
+	 * @param {number} v [0.0,1.0]
+	 * @param {number} [a] [0.0,1.0]
 	 * @returns {NTColor}
 	 * @private
 	 */
@@ -290,11 +290,11 @@ class NTColor {
 	}
 
 	/**
-	 * 内部のデータをhslaで書き換える
-	 * @param {number} h
-	 * @param {number} s
-	 * @param {number} l
-	 * @param {number} [a]
+	 * 内部のデータを HSLA で書き換える
+	 * @param {number} h [0.0,1.0]
+	 * @param {number} s [0.0,1.0]
+	 * @param {number} l [0.0,1.0]
+	 * @param {number} [a] [0.0,1.0]
 	 * @returns {NTColor}
 	 * @private
 	 */
@@ -351,7 +351,7 @@ class NTColor {
 	}
 
 	/**
-	 * 内部のデータをrgbaの値で取得する
+	 * 内部のデータを RGBA の値で取得する
 	 * @returns {{r: number, g: number, b: number, a: number}}
 	 * @private
 	 */
@@ -365,7 +365,7 @@ class NTColor {
 	}
 
 	/**
-	 * 内部のデータをhsvaの値で取得する
+	 * 内部のデータを HSVA の値で取得する
 	 * @returns {{h: number, s: number, v: number, a: number}}
 	 * @private
 	 */
@@ -407,7 +407,7 @@ class NTColor {
 	}
 
 	/**
-	 * 内部のデータをhslaの値で取得する
+	 * 内部のデータを HSLA の値で取得する
 	 * @returns {{h: number, s: number, l: number, a: number}}
 	 * @private
 	 */
@@ -451,7 +451,7 @@ class NTColor {
 	}
 
 	/**
-	 * 0...1 に正規化された色を取得する
+	 * [0.0,1.0] に正規化された ARGB の値を取得する
 	 * @returns {{r: number, g: number, b: number, a: number}}
 	 */
 	toNormalizedRGB() {
@@ -459,7 +459,7 @@ class NTColor {
 	}
 
 	/**
-	 * 0...255 に正規化された色を取得する
+	 * [0,255] の ARGB の値を取得する
 	 * @returns {{r: number, g: number, b: number, a: number}}
 	 */
 	toRGB() {
@@ -497,7 +497,7 @@ class NTColor {
 	}
 
 	/**
-	 * 0...1 に正規化された HSV の値を取得する
+	 * [0.0,1.0] に正規化された HSV の値を取得する
 	 * @returns {{h: number, s: number, v: number, a: number}}
 	 * @private
 	 */
@@ -506,7 +506,7 @@ class NTColor {
 	}
 
 	/**
-	 * 0...255 の HSV の値を取得する。ただし色相は 0...359 とする。
+	 * [0,255] の HSV の値を取得する。ただし色相は [0,359] とする。
 	 * @returns {{h: number, s: number, v: number, a: number}}
 	 * @private
 	 */
@@ -520,7 +520,7 @@ class NTColor {
 	}
 
 	/**
-	 * 0...1 に正規化された HSL の値を取得する
+	 * [0.0,1.0] に正規化された HSL の値を取得する
 	 * @returns {{h: number, s: number, l: number, a: number}}
 	 * @private
 	 */
@@ -529,7 +529,7 @@ class NTColor {
 	}
 
 	/**
-	 * 0...255 の HSL の値を取得する。ただし色相は 0...359 とする。
+	 * [0,255] の HSL の値を取得する。ただし色相は [0,359] とする。
 	 * @returns {{h: number, s: number, l: number, a: number}}
 	 */
 	toHSL() {
@@ -542,35 +542,99 @@ class NTColor {
 	}
 
 	/**
-	 * 0...255 の赤成分
+	 * [0.0,1.0] の赤成分
 	 * @returns {number}
 	 */
 	get r() {
+		return this._r;
+	}
+
+	/**
+	 * [0.0,1.0] の緑成分
+	 * @returns {number}
+	 */
+	get g() {
+		return this._g;
+	}
+
+	/**
+	 * [0.0,1.0] の青成分
+	 * @returns {number}
+	 */
+	get b() {
+		return this._b;
+	}
+
+	/**
+	 * [0.0,1.0] のアルファ成分
+	 * @returns {number}
+	 */
+	get a() {
+		return this._a;
+	}
+
+	/**
+	 * [0,255] の赤成分
+	 * @returns {number}
+	 */
+	get ir() {
 		return Math.round(this._r * 255.0);
 	}
 
 	/**
-	 * 0...255 の緑成分
+	 * [0,255] の緑成分
 	 * @returns {number}
 	 */
-	get g() {
+	get ig() {
 		return Math.round(this._g * 255.0);
 	}
 
 	/**
-	 * 0...255 の青成分
+	 * [0,255] の青成分
 	 * @returns {number}
 	 */
-	get b() {
+	get ib() {
 		return Math.round(this._b * 255.0);
 	}
 
 	/**
-	 * 0...255 のアルファ成分
+	 * [0,255] のアルファ成分
 	 * @returns {number}
 	 */
-	get a() {
-		return Math.round(this._b * 255.0);
+	get ia() {
+		return Math.round(this._a * 255.0);
+	}
+
+	/**
+	 * [0,100] の赤成分
+	 * @returns {number}
+	 */
+	get pr() {
+		return this._r * 100.0;
+	}
+
+	/**
+	 * [0,100] の緑成分
+	 * @returns {number}
+	 */
+	get pg() {
+		return this._g * 100.0;
+	}
+
+	/**
+	 * [0,100] の青成分
+	 * @returns {number}
+	 */
+	get pb() {
+		return this._b * 100.0;
+	}
+
+	/**
+	 * [0,100] のアルファ成分
+	 * @returns {number}
+	 */
+	get pa() {
+		return this._a * 100.0;
 	}
 
 	/**
@@ -596,51 +660,24 @@ class NTColor {
 	 * @returns {string}
 	 */
 	toCSSHex() {
-		if (NTColor._equals(this._a, 1.0)) {
-			return (
-				"#" +
-				NTColor._hex(NTColor._limit(this._r)) +
-				NTColor._hex(NTColor._limit(this._g)) +
-				NTColor._hex(NTColor._limit(this._b))
-			);
+		const out = this.limit();
+		if (NTColor._equals(this.a, 1.0)) {
+			return "#" + NTColor._hex(out.r) + NTColor._hex(out.g) + NTColor._hex(out.b);
 		} else {
-			return (
-				"#" +
-				NTColor._hex(NTColor._limit(this._a)) +
-				NTColor._hex(NTColor._limit(this._r)) +
-				NTColor._hex(NTColor._limit(this._g)) +
-				NTColor._hex(NTColor._limit(this._b))
-			);
+			return "#" + NTColor._hex(out.a) + NTColor._hex(out.r) + NTColor._hex(out.g) + NTColor._hex(out.b);
 		}
 	}
 
 	/**
-	 * CSSで使用できる 0...1 のrgb/rgbaの色情報のテキストを取得する
+	 * CSSで使用できる `rgb()`/`rgba()` の色情報のテキストを取得する
 	 * @returns {string}
 	 */
 	toCSS255() {
-		if (NTColor._equals(this._a, 1.0)) {
-			return (
-				"rgb(" +
-				Math.round(NTColor._limit(this._r) * 255) +
-				"," +
-				Math.round(NTColor._limit(this._g) * 255) +
-				"," +
-				Math.round(NTColor._limit(this._b) * 255) +
-				")"
-			);
+		const out = this.limit();
+		if (NTColor._equals(out.a, 1.0)) {
+			return "rgb(" + out.ir + "," + out.ig + "," + out.ib + ")";
 		} else {
-			return (
-				"rgba(" +
-				Math.round(NTColor._limit(this._r) * 255) +
-				"," +
-				Math.round(NTColor._limit(this._g) * 255) +
-				"," +
-				Math.round(NTColor._limit(this._b) * 255) +
-				"," +
-				NTColor._f(this._a) +
-				")"
-			);
+			return "rgba(" + out.ir + "," + out.ig + "," + out.ib + "," + NTColor._ftos(out.a) + ")";
 		}
 	}
 
@@ -649,26 +686,19 @@ class NTColor {
 	 * @returns {string}
 	 */
 	toCSSPercent() {
-		if (NTColor._equals(this._a, 1.0)) {
-			return (
-				"rgb(" +
-				Math.round(NTColor._limit(this._r) * 100) +
-				"%," +
-				Math.round(NTColor._limit(this._g) * 100) +
-				"%," +
-				Math.round(NTColor._limit(this._b) * 100) +
-				"%)"
-			);
+		const out = this.limit();
+		if (NTColor._equals(out.a, 1.0)) {
+			return "rgb(" + Math.round(out.pr) + "%," + Math.round(out.pg) + "%," + Math.round(out.pb) + "%)";
 		} else {
 			return (
 				"rgba(" +
-				Math.round(NTColor._limit(this._r) * 100) +
+				Math.round(out.pr) +
 				"%," +
-				Math.round(NTColor._limit(this._g) * 100) +
+				Math.round(out.pg) +
 				"%," +
-				Math.round(NTColor._limit(this._b) * 100) +
+				Math.round(out.pb) +
 				"%," +
-				Math.round(NTColor._limit(this._a) * 100) +
+				Math.round(out.pa) +
 				"%)"
 			);
 		}

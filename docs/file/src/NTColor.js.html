@@ -1,4 +1,44 @@
-﻿/**
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/NTColor.js | ntcolor</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Library for using color information in JavaScript."><meta property="twitter:card" content="summary"><meta property="twitter:title" content="ntcolor"><meta property="twitter:description" content="Library for using color information in JavaScript."></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/natade-jp/js-ntcolor"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/NTColor.js~NTColor.html">NTColor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NTColorInputColorHSLA">NTColorInputColorHSLA</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NTColorInputColorHSVA">NTColorInputColorHSVA</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-NTColorInputColorRGBA">NTColorInputColorRGBA</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/NTColor.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">&#xFEFF;/**
  * The script is part of SenkoJS.
  *
  * AUTHOR:
@@ -9,42 +49,42 @@
  */
 
 /**
- * 色情報を扱うクラス (immutable)
+ * &#x8272;&#x60C5;&#x5831;&#x3092;&#x6271;&#x3046;&#x30AF;&#x30E9;&#x30B9; (immutable)
  */
 export default class NTColor {
 	/**
-	 * コンストラクタ
+	 * &#x30B3;&#x30F3;&#x30B9;&#x30C8;&#x30E9;&#x30AF;&#x30BF;
 	 */
 	constructor() {
-		// 中身は 0 ~ 1に正規化した値とする
+		// &#x4E2D;&#x8EAB;&#x306F; 0 ~ 1&#x306B;&#x6B63;&#x898F;&#x5316;&#x3057;&#x305F;&#x5024;&#x3068;&#x3059;&#x308B;
 
 		/**
-		 * 赤色成分 [0.0,1.0]
+		 * &#x8D64;&#x8272;&#x6210;&#x5206; [0.0,1.0]
 		 * @types {number}
 		 */
 		this._r = 0.0;
 
 		/**
-		 * 緑色成分 [0.0,1.0]
+		 * &#x7DD1;&#x8272;&#x6210;&#x5206; [0.0,1.0]
 		 * @types {number}
 		 */
 		this._g = 0.0;
 
 		/**
-		 * 青色成分 [0.0,1.0]
+		 * &#x9752;&#x8272;&#x6210;&#x5206; [0.0,1.0]
 		 * @types {number}
 		 */
 		this._b = 0.0;
 
 		/**
-		 * 透明度成分 [0.0,1.0]
+		 * &#x900F;&#x660E;&#x5EA6;&#x6210;&#x5206; [0.0,1.0]
 		 * @types {number}
 		 */
 		this._a = 1.0;
 	}
 
 	/**
-	 * 色を表示できる範囲内 [0.0,1.0] に収める
+	 * &#x8272;&#x3092;&#x8868;&#x793A;&#x3067;&#x304D;&#x308B;&#x7BC4;&#x56F2;&#x5185; [0.0,1.0] &#x306B;&#x53CE;&#x3081;&#x308B;
 	 * @returns {NTColor}
 	 */
 	limit() {
@@ -57,7 +97,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 色をアルファ値で焼きこむ
+	 * &#x8272;&#x3092;&#x30A2;&#x30EB;&#x30D5;&#x30A1;&#x5024;&#x3067;&#x713C;&#x304D;&#x3053;&#x3080;
 	 * @returns {NTColor}
 	 */
 	bake() {
@@ -70,14 +110,14 @@ export default class NTColor {
 	}
 
 	/**
-	 * 各色成分に加法混色を行う
+	 * &#x5404;&#x8272;&#x6210;&#x5206;&#x306B;&#x52A0;&#x6CD5;&#x6DF7;&#x8272;&#x3092;&#x884C;&#x3046;
 	 * @param {NTColor} x
 	 * @returns {NTColor}
 	 */
 	addColorMixture(x) {
-		// 加法混色
+		// &#x52A0;&#x6CD5;&#x6DF7;&#x8272;
 		if (!(x instanceof NTColor)) {
-			throw "IllegalArgumentException";
+			throw &quot;IllegalArgumentException&quot;;
 		}
 		return NTColor.newColorNormalizedRGB(
 			this._r + x._r * x._a,
@@ -88,14 +128,14 @@ export default class NTColor {
 	}
 
 	/**
-	 * 各色成分に減法混色を行う
+	 * &#x5404;&#x8272;&#x6210;&#x5206;&#x306B;&#x6E1B;&#x6CD5;&#x6DF7;&#x8272;&#x3092;&#x884C;&#x3046;
 	 * @param {NTColor} x
 	 * @returns {NTColor}
 	 */
 	subColorMixture(x) {
-		// 減法混色
+		// &#x6E1B;&#x6CD5;&#x6DF7;&#x8272;
 		if (!(x instanceof NTColor)) {
-			throw "IllegalArgumentException";
+			throw &quot;IllegalArgumentException&quot;;
 		}
 		const r = Math.min(this._r, x._r);
 		const g = Math.min(this._g, x._g);
@@ -109,22 +149,22 @@ export default class NTColor {
 	}
 
 	/**
-	 * 各色成分に掛け算を行う
+	 * &#x5404;&#x8272;&#x6210;&#x5206;&#x306B;&#x639B;&#x3051;&#x7B97;&#x3092;&#x884C;&#x3046;
 	 * @param {NTColor|number} x
 	 * @returns {NTColor}
 	 */
 	mul(x) {
 		if (x instanceof NTColor) {
 			return NTColor.newColorNormalizedRGB(this._r * x._r, this._g * x._g, this._b * x._b, this._a * x._a);
-		} else if (typeof x === "number") {
+		} else if (typeof x === &quot;number&quot;) {
 			return NTColor.newColorNormalizedRGB(this._r * x, this._g * x, this._b * x, this._a);
 		} else {
-			throw "IllegalArgumentException";
+			throw &quot;IllegalArgumentException&quot;;
 		}
 	}
 
 	/**
-	 * オブジェクトを複製する
+	 * &#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x8907;&#x88FD;&#x3059;&#x308B;
 	 * @returns {NTColor}
 	 */
 	clone() {
@@ -137,29 +177,29 @@ export default class NTColor {
 	}
 
 	/**
-	 * オブジェクトを比較する
+	 * &#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x6BD4;&#x8F03;&#x3059;&#x308B;
 	 * @param {NTColor} x
 	 * @returns {boolean}
 	 */
 	equals(x) {
 		return (
-			NTColor._equals(this._r, x._r) &&
-			NTColor._equals(this._g, x._g) &&
-			NTColor._equals(this._b, x._b) &&
+			NTColor._equals(this._r, x._r) &amp;&amp;
+			NTColor._equals(this._g, x._g) &amp;&amp;
+			NTColor._equals(this._b, x._b) &amp;&amp;
 			NTColor._equals(this._a, x._a)
 		);
 	}
 
 	/**
-	 * 文字列化する
+	 * &#x6587;&#x5B57;&#x5217;&#x5316;&#x3059;&#x308B;
 	 * @returns {string}
 	 */
 	toString() {
-		return "NTColor[" + this.toCSSHex() + ", " + this.toCSS255() + ", " + this.toCSSPercent() + "]";
+		return &quot;NTColor[&quot; + this.toCSSHex() + &quot;, &quot; + this.toCSS255() + &quot;, &quot; + this.toCSSPercent() + &quot;]&quot;;
 	}
 
 	/**
-	 * `v0 + (v1 - v0) * x` で線形補間する
+	 * `v0 + (v1 - v0) * x` &#x3067;&#x7DDA;&#x5F62;&#x88DC;&#x9593;&#x3059;&#x308B;
 	 * @param {number} v0
 	 * @param {number} v1
 	 * @param {number} x
@@ -171,7 +211,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 指定した値を [0.0,1.0] の範囲にする
+	 * &#x6307;&#x5B9A;&#x3057;&#x305F;&#x5024;&#x3092; [0.0,1.0] &#x306E;&#x7BC4;&#x56F2;&#x306B;&#x3059;&#x308B;
 	 * @param {number} x
 	 * @returns {number}
 	 * @private
@@ -181,7 +221,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 指定した値を比較する
+	 * &#x6307;&#x5B9A;&#x3057;&#x305F;&#x5024;&#x3092;&#x6BD4;&#x8F03;&#x3059;&#x308B;
 	 * @param {number} x
 	 * @param {number} y
 	 * @returns {boolean}
@@ -189,11 +229,11 @@ export default class NTColor {
 	 */
 	static _equals(x, y) {
 		const tolerance = Number.EPSILON;
-		return Math.abs(x - y) < tolerance;
+		return Math.abs(x - y) &lt; tolerance;
 	}
 
 	/**
-	 * 指定した値を負の値へ整数化する
+	 * &#x6307;&#x5B9A;&#x3057;&#x305F;&#x5024;&#x3092;&#x8CA0;&#x306E;&#x5024;&#x3078;&#x6574;&#x6570;&#x5316;&#x3059;&#x308B;
 	 * @param {number} x
 	 * @returns {number}
 	 * @private
@@ -203,7 +243,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 16進数の文字列化する
+	 * 16&#x9032;&#x6570;&#x306E;&#x6587;&#x5B57;&#x5217;&#x5316;&#x3059;&#x308B;
 	 * @param {number} x
 	 * @returns {string}
 	 * @private
@@ -211,25 +251,25 @@ export default class NTColor {
 	static _hex(x) {
 		const str = Math.round(x * 255.0).toString(16);
 		if (str.length === 1) {
-			return "0" + str;
+			return &quot;0&quot; + str;
 		} else {
 			return str;
 		}
 	}
 
 	/**
-	 * 少数3桁程度の固定小数点文字列を取得する
+	 * &#x5C11;&#x6570;3&#x6841;&#x7A0B;&#x5EA6;&#x306E;&#x56FA;&#x5B9A;&#x5C0F;&#x6570;&#x70B9;&#x6587;&#x5B57;&#x5217;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @param {number} x
 	 * @returns {string}
 	 * @private
 	 */
 	static _ftos(x) {
 		const i = Math.trunc(x);
-		return i.toString() + "." + Math.round((x - i) * 1000);
+		return i.toString() + &quot;.&quot; + Math.round((x - i) * 1000);
 	}
 
 	/**
-	 * 内部のデータを RGBA で書き換える
+	 * &#x5185;&#x90E8;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x3092; RGBA &#x3067;&#x66F8;&#x304D;&#x63DB;&#x3048;&#x308B;
 	 * @param {number} r [0.0,1.0]
 	 * @param {number} g [0.0,1.0]
 	 * @param {number} b [0.0,1.0]
@@ -246,7 +286,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 内部のデータを HSVA で書き換える
+	 * &#x5185;&#x90E8;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x3092; HSVA &#x3067;&#x66F8;&#x304D;&#x63DB;&#x3048;&#x308B;
 	 * @param {number} h [0.0,1.0]
 	 * @param {number} s [0.0,1.0]
 	 * @param {number} v [0.0,1.0]
@@ -262,7 +302,7 @@ export default class NTColor {
 		this._b = v;
 		if (a) this._a = a;
 
-		if (s > 0.0) {
+		if (s &gt; 0.0) {
 			h *= 6.0;
 			i = ~~Math.floor(h);
 			f = h - i;
@@ -290,7 +330,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 内部のデータを HSLA で書き換える
+	 * &#x5185;&#x90E8;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x3092; HSLA &#x3067;&#x66F8;&#x304D;&#x63DB;&#x3048;&#x308B;
 	 * @param {number} h [0.0,1.0]
 	 * @param {number} s [0.0,1.0]
 	 * @param {number} l [0.0,1.0]
@@ -309,7 +349,7 @@ export default class NTColor {
 		}
 
 		let max;
-		if (l < 0.5) {
+		if (l &lt; 0.5) {
 			max = l * (1.0 + s);
 		} else {
 			max = l * (1.0 - s) + s;
@@ -351,7 +391,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 内部のデータを RGBA の値で取得する
+	 * &#x5185;&#x90E8;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x3092; RGBA &#x306E;&#x5024;&#x3067;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {{r: number, g: number, b: number, a: number}}
 	 * @private
 	 */
@@ -365,7 +405,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 内部のデータを HSVA の値で取得する
+	 * &#x5185;&#x90E8;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x3092; HSVA &#x306E;&#x5024;&#x3067;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {{h: number, s: number, v: number, a: number}}
 	 * @private
 	 */
@@ -388,7 +428,7 @@ export default class NTColor {
 
 		if (max === this._r) {
 			h = (this._g - this._b) / delta;
-			if (h < 0.0) {
+			if (h &lt; 0.0) {
 				h += 6.0;
 			}
 		} else if (max === this._g) {
@@ -407,7 +447,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 内部のデータを HSLA の値で取得する
+	 * &#x5185;&#x90E8;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x3092; HSLA &#x306E;&#x5024;&#x3067;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {{h: number, s: number, l: number, a: number}}
 	 * @private
 	 */
@@ -423,7 +463,7 @@ export default class NTColor {
 		}
 
 		let s;
-		if (l < 0.5) {
+		if (l &lt; 0.5) {
 			s = delta / (max + min);
 		} else {
 			s = delta / (2.0 - max - min);
@@ -432,7 +472,7 @@ export default class NTColor {
 		let h;
 		if (max === this._r) {
 			h = (this._g - this._b) / delta;
-			if (h < 0.0) {
+			if (h &lt; 0.0) {
 				h += 6.0;
 			}
 		} else if (max === this._g) {
@@ -451,7 +491,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0.0,1.0] に正規化された ARGB の値を取得する
+	 * [0.0,1.0] &#x306B;&#x6B63;&#x898F;&#x5316;&#x3055;&#x308C;&#x305F; ARGB &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {{r: number, g: number, b: number, a: number}}
 	 */
 	toNormalizedRGB() {
@@ -459,7 +499,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,255] の ARGB の値を取得する
+	 * [0,255] &#x306E; ARGB &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {{r: number, g: number, b: number, a: number}}
 	 */
 	toRGB() {
@@ -472,32 +512,32 @@ export default class NTColor {
 	}
 
 	/**
-	 * 0x00RRGGBB の値を取得する
+	 * 0x00RRGGBB &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {number}
 	 */
 	toRRGGBB() {
 		return (
-			(Math.round(255.0 * NTColor._limit(this._r)) << 16) |
-			(Math.round(255.0 * NTColor._limit(this._g)) << 8) |
+			(Math.round(255.0 * NTColor._limit(this._r)) &lt;&lt; 16) |
+			(Math.round(255.0 * NTColor._limit(this._g)) &lt;&lt; 8) |
 			Math.round(255.0 * NTColor._limit(this._b))
 		);
 	}
 
 	/**
-	 * 0xAARRGGBB の値を取得する
+	 * 0xAARRGGBB &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {number}
 	 */
 	toAARRGGBB() {
 		return (
 			Math.round(255.0 * NTColor._limit(this._a)) * 0x1000000 +
-			(Math.round(255.0 * NTColor._limit(this._r)) << 16) +
-			(Math.round(255.0 * NTColor._limit(this._g)) << 8) +
+			(Math.round(255.0 * NTColor._limit(this._r)) &lt;&lt; 16) +
+			(Math.round(255.0 * NTColor._limit(this._g)) &lt;&lt; 8) +
 			Math.round(255.0 * NTColor._limit(this._b))
 		);
 	}
 
 	/**
-	 * [0.0,1.0] に正規化された HSV の値を取得する
+	 * [0.0,1.0] &#x306B;&#x6B63;&#x898F;&#x5316;&#x3055;&#x308C;&#x305F; HSV &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {{h: number, s: number, v: number, a: number}}
 	 * @private
 	 */
@@ -506,7 +546,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,255] の HSV の値を取得する。ただし色相は [0,359] とする。
+	 * [0,255] &#x306E; HSV &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;&#x3002;&#x305F;&#x3060;&#x3057;&#x8272;&#x76F8;&#x306F; [0,359] &#x3068;&#x3059;&#x308B;&#x3002;
 	 * @returns {{h: number, s: number, v: number, a: number}}
 	 * @private
 	 */
@@ -520,7 +560,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0.0,1.0] に正規化された HSL の値を取得する
+	 * [0.0,1.0] &#x306B;&#x6B63;&#x898F;&#x5316;&#x3055;&#x308C;&#x305F; HSL &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {{h: number, s: number, l: number, a: number}}
 	 * @private
 	 */
@@ -529,7 +569,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,255] の HSL の値を取得する。ただし色相は [0,359] とする。
+	 * [0,255] &#x306E; HSL &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;&#x3002;&#x305F;&#x3060;&#x3057;&#x8272;&#x76F8;&#x306F; [0,359] &#x3068;&#x3059;&#x308B;&#x3002;
 	 * @returns {{h: number, s: number, l: number, a: number}}
 	 */
 	toHSL() {
@@ -542,7 +582,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0.0,1.0] の赤成分
+	 * [0.0,1.0] &#x306E;&#x8D64;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get r() {
@@ -550,7 +590,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0.0,1.0] の緑成分
+	 * [0.0,1.0] &#x306E;&#x7DD1;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get g() {
@@ -558,7 +598,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0.0,1.0] の青成分
+	 * [0.0,1.0] &#x306E;&#x9752;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get b() {
@@ -566,7 +606,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0.0,1.0] のアルファ成分
+	 * [0.0,1.0] &#x306E;&#x30A2;&#x30EB;&#x30D5;&#x30A1;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get a() {
@@ -574,7 +614,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,255] の赤成分
+	 * [0,255] &#x306E;&#x8D64;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get ir() {
@@ -582,7 +622,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,255] の緑成分
+	 * [0,255] &#x306E;&#x7DD1;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get ig() {
@@ -590,7 +630,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,255] の青成分
+	 * [0,255] &#x306E;&#x9752;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get ib() {
@@ -598,7 +638,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,255] のアルファ成分
+	 * [0,255] &#x306E;&#x30A2;&#x30EB;&#x30D5;&#x30A1;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get ia() {
@@ -606,7 +646,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,100] の赤成分
+	 * [0,100] &#x306E;&#x8D64;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get pr() {
@@ -614,7 +654,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,100] の緑成分
+	 * [0,100] &#x306E;&#x7DD1;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get pg() {
@@ -622,7 +662,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,100] の青成分
+	 * [0,100] &#x306E;&#x9752;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get pb() {
@@ -630,7 +670,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * [0,100] のアルファ成分
+	 * [0,100] &#x306E;&#x30A2;&#x30EB;&#x30D5;&#x30A1;&#x6210;&#x5206;
 	 * @returns {number}
 	 */
 	get pa() {
@@ -638,7 +678,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 明るい色を取得する
+	 * &#x660E;&#x308B;&#x3044;&#x8272;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {NTColor}
 	 */
 	brighter() {
@@ -647,7 +687,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 暗い色を取得する
+	 * &#x6697;&#x3044;&#x8272;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {NTColor}
 	 */
 	darker() {
@@ -656,56 +696,56 @@ export default class NTColor {
 	}
 
 	/**
-	 * CSSで使用できる16進数の色情報のテキストを取得する
+	 * CSS&#x3067;&#x4F7F;&#x7528;&#x3067;&#x304D;&#x308B;16&#x9032;&#x6570;&#x306E;&#x8272;&#x60C5;&#x5831;&#x306E;&#x30C6;&#x30AD;&#x30B9;&#x30C8;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {string}
 	 */
 	toCSSHex() {
 		const out = this.limit();
 		if (NTColor._equals(this.a, 1.0)) {
-			return "#" + NTColor._hex(out.r) + NTColor._hex(out.g) + NTColor._hex(out.b);
+			return &quot;#&quot; + NTColor._hex(out.r) + NTColor._hex(out.g) + NTColor._hex(out.b);
 		} else {
-			return "#" + NTColor._hex(out.a) + NTColor._hex(out.r) + NTColor._hex(out.g) + NTColor._hex(out.b);
+			return &quot;#&quot; + NTColor._hex(out.a) + NTColor._hex(out.r) + NTColor._hex(out.g) + NTColor._hex(out.b);
 		}
 	}
 
 	/**
-	 * CSSで使用できる `rgb()`/`rgba()` の色情報のテキストを取得する
+	 * CSS&#x3067;&#x4F7F;&#x7528;&#x3067;&#x304D;&#x308B; `rgb()`/`rgba()` &#x306E;&#x8272;&#x60C5;&#x5831;&#x306E;&#x30C6;&#x30AD;&#x30B9;&#x30C8;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {string}
 	 */
 	toCSS255() {
 		const out = this.limit();
 		if (NTColor._equals(out.a, 1.0)) {
-			return "rgb(" + out.ir + "," + out.ig + "," + out.ib + ")";
+			return &quot;rgb(&quot; + out.ir + &quot;,&quot; + out.ig + &quot;,&quot; + out.ib + &quot;)&quot;;
 		} else {
-			return "rgba(" + out.ir + "," + out.ig + "," + out.ib + "," + NTColor._ftos(out.a) + ")";
+			return &quot;rgba(&quot; + out.ir + &quot;,&quot; + out.ig + &quot;,&quot; + out.ib + &quot;,&quot; + NTColor._ftos(out.a) + &quot;)&quot;;
 		}
 	}
 
 	/**
-	 * CSSで使用できるパーセンテージのrgb/rgbaの色情報のテキストを取得する
+	 * CSS&#x3067;&#x4F7F;&#x7528;&#x3067;&#x304D;&#x308B;&#x30D1;&#x30FC;&#x30BB;&#x30F3;&#x30C6;&#x30FC;&#x30B8;&#x306E;rgb/rgba&#x306E;&#x8272;&#x60C5;&#x5831;&#x306E;&#x30C6;&#x30AD;&#x30B9;&#x30C8;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {string}
 	 */
 	toCSSPercent() {
 		const out = this.limit();
 		if (NTColor._equals(out.a, 1.0)) {
-			return "rgb(" + Math.round(out.pr) + "%," + Math.round(out.pg) + "%," + Math.round(out.pb) + "%)";
+			return &quot;rgb(&quot; + Math.round(out.pr) + &quot;%,&quot; + Math.round(out.pg) + &quot;%,&quot; + Math.round(out.pb) + &quot;%)&quot;;
 		} else {
 			return (
-				"rgba(" +
+				&quot;rgba(&quot; +
 				Math.round(out.pr) +
-				"%," +
+				&quot;%,&quot; +
 				Math.round(out.pg) +
-				"%," +
+				&quot;%,&quot; +
 				Math.round(out.pb) +
-				"%," +
+				&quot;%,&quot; +
 				Math.round(out.pa) +
-				"%)"
+				&quot;%)&quot;
 			);
 		}
 	}
 
 	/**
-	 * 指定した透明度の色情報を作成して取得する
+	 * &#x6307;&#x5B9A;&#x3057;&#x305F;&#x900F;&#x660E;&#x5EA6;&#x306E;&#x8272;&#x60C5;&#x5831;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x3066;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @param {number} a
 	 * @returns {NTColor}
 	 */
@@ -716,7 +756,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 色の型情報
+	 * &#x8272;&#x306E;&#x578B;&#x60C5;&#x5831;
 	 * @typedef {Object} NTColorInputColorRGBA
 	 * @property {number} [r]
 	 * @property {number} [g]
@@ -725,7 +765,7 @@ export default class NTColor {
 	 */
 
 	/**
-	 * 指定した 0...1 の色情報からオブジェクトを作成する
+	 * &#x6307;&#x5B9A;&#x3057;&#x305F; 0...1 &#x306E;&#x8272;&#x60C5;&#x5831;&#x304B;&#x3089;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x4F5C;&#x6210;&#x3059;&#x308B;
 	 * @param {number|NTColorInputColorRGBA|number[]} color_or_r
 	 * @param {number} [g]
 	 * @param {number} [b]
@@ -738,43 +778,43 @@ export default class NTColor {
 		let in_b = 0.0;
 		let in_a = 1.0;
 		if (arguments.length === 1) {
-			if (typeof color_or_r === "object") {
+			if (typeof color_or_r === &quot;object&quot;) {
 				if (!Array.isArray(color_or_r)) {
 					if (color_or_r.r !== undefined) in_r = color_or_r.r;
 					if (color_or_r.g !== undefined) in_g = color_or_r.g;
 					if (color_or_r.b !== undefined) in_b = color_or_r.b;
 					if (color_or_r.a !== undefined) in_a = color_or_r.a;
 				} else {
-					if (color_or_r.length >= 3) {
+					if (color_or_r.length &gt;= 3) {
 						in_r = color_or_r[0];
 						in_g = color_or_r[1];
 						in_b = color_or_r[2];
 					}
-					if (color_or_r.length >= 4) {
+					if (color_or_r.length &gt;= 4) {
 						in_a = color_or_r[3];
 					}
 				}
 			} else {
-				throw "newColorNormalizedRGB";
+				throw &quot;newColorNormalizedRGB&quot;;
 			}
 		} else {
-			if (arguments.length >= 3) {
+			if (arguments.length &gt;= 3) {
 				in_r = arguments[0];
 				in_g = g;
 				in_b = b;
 			}
-			if (arguments.length >= 4) {
+			if (arguments.length &gt;= 4) {
 				in_a = a;
 			}
 		}
-		// 出力時にLimitする。入力時にはLimitしない。
+		// &#x51FA;&#x529B;&#x6642;&#x306B;Limit&#x3059;&#x308B;&#x3002;&#x5165;&#x529B;&#x6642;&#x306B;&#x306F;Limit&#x3057;&#x306A;&#x3044;&#x3002;
 		const color = new NTColor();
 		color._setRGB(in_r, in_g, in_b, in_a);
 		return color;
 	}
 
 	/**
-	 * 指定した 0...255 の色情報からオブジェクトを作成する
+	 * &#x6307;&#x5B9A;&#x3057;&#x305F; 0...255 &#x306E;&#x8272;&#x60C5;&#x5831;&#x304B;&#x3089;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x4F5C;&#x6210;&#x3059;&#x308B;
 	 * @param {number|NTColorInputColorRGBA|number[]} color_or_aarrggbb
 	 * @param {number|boolean} [g_or_is_load_alpha = false]
 	 * @param {number} [b]
@@ -786,49 +826,49 @@ export default class NTColor {
 		let in_g = 0.0;
 		let in_b = 0.0;
 		let in_a = 255.0;
-		if (arguments.length <= 2) {
-			if (typeof color_or_aarrggbb === "number") {
-				in_r = (color_or_aarrggbb >> 16) & 0xff;
-				in_g = (color_or_aarrggbb >> 8) & 0xff;
-				in_b = color_or_aarrggbb & 0xff;
-				if (color_or_aarrggbb > 0xffffff || g_or_is_load_alpha) {
-					in_a = (color_or_aarrggbb >> 24) & 0xff;
+		if (arguments.length &lt;= 2) {
+			if (typeof color_or_aarrggbb === &quot;number&quot;) {
+				in_r = (color_or_aarrggbb &gt;&gt; 16) &amp; 0xff;
+				in_g = (color_or_aarrggbb &gt;&gt; 8) &amp; 0xff;
+				in_b = color_or_aarrggbb &amp; 0xff;
+				if (color_or_aarrggbb &gt; 0xffffff || g_or_is_load_alpha) {
+					in_a = (color_or_aarrggbb &gt;&gt; 24) &amp; 0xff;
 				}
-			} else if (typeof color_or_aarrggbb === "object") {
+			} else if (typeof color_or_aarrggbb === &quot;object&quot;) {
 				if (!Array.isArray(color_or_aarrggbb)) {
 					if (color_or_aarrggbb.r !== undefined) in_r = color_or_aarrggbb.r;
 					if (color_or_aarrggbb.g !== undefined) in_g = color_or_aarrggbb.g;
 					if (color_or_aarrggbb.b !== undefined) in_b = color_or_aarrggbb.b;
 					if (color_or_aarrggbb.a !== undefined) in_a = color_or_aarrggbb.a;
 				} else {
-					if (color_or_aarrggbb.length >= 3) {
+					if (color_or_aarrggbb.length &gt;= 3) {
 						in_r = color_or_aarrggbb[0];
 						in_g = color_or_aarrggbb[1];
 						in_b = color_or_aarrggbb[2];
 					}
-					if (color_or_aarrggbb.length >= 4) {
+					if (color_or_aarrggbb.length &gt;= 4) {
 						in_a = color_or_aarrggbb[3];
 					}
 				}
 			} else {
-				throw "newColorNormalizedRGB";
+				throw &quot;newColorNormalizedRGB&quot;;
 			}
-		} else if (arguments.length >= 3) {
+		} else if (arguments.length &gt;= 3) {
 			in_r = arguments[0];
 			in_g = arguments[1];
 			in_b = arguments[2];
-			if (arguments.length >= 4) {
+			if (arguments.length &gt;= 4) {
 				in_a = arguments[3];
 			}
 		}
-		// 出力時にLimitする。入力時にはLimitしない。
+		// &#x51FA;&#x529B;&#x6642;&#x306B;Limit&#x3059;&#x308B;&#x3002;&#x5165;&#x529B;&#x6642;&#x306B;&#x306F;Limit&#x3057;&#x306A;&#x3044;&#x3002;
 		const color = new NTColor();
 		color._setRGB(in_r / 255.0, in_g / 255.0, in_b / 255.0, in_a / 255.0);
 		return color;
 	}
 
 	/**
-	 * 色の型情報
+	 * &#x8272;&#x306E;&#x578B;&#x60C5;&#x5831;
 	 * @typedef {Object} NTColorInputColorHSVA
 	 * @property {number} [h]
 	 * @property {number} [s]
@@ -837,7 +877,7 @@ export default class NTColor {
 	 */
 
 	/**
-	 * 指定した 0...1 の色情報からオブジェクトを作成する
+	 * &#x6307;&#x5B9A;&#x3057;&#x305F; 0...1 &#x306E;&#x8272;&#x60C5;&#x5831;&#x304B;&#x3089;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x4F5C;&#x6210;&#x3059;&#x308B;
 	 * @param {number|NTColorInputColorHSVA|number[]} color_or_h
 	 * @param {number} [s]
 	 * @param {number} [v]
@@ -850,36 +890,36 @@ export default class NTColor {
 		let in_v = 0.0;
 		let in_a = 1.0;
 		if (arguments.length === 1) {
-			if (typeof color_or_h === "object") {
+			if (typeof color_or_h === &quot;object&quot;) {
 				if (!Array.isArray(color_or_h)) {
 					if (color_or_h.h !== undefined) in_h = color_or_h.h;
 					if (color_or_h.s !== undefined) in_s = color_or_h.s;
 					if (color_or_h.v !== undefined) in_v = color_or_h.v;
 					if (color_or_h.a !== undefined) in_a = color_or_h.a;
 				} else {
-					if (color_or_h.length >= 3) {
+					if (color_or_h.length &gt;= 3) {
 						in_h = color_or_h[0];
 						in_s = color_or_h[1];
 						in_v = color_or_h[2];
 					}
-					if (color_or_h.length >= 4) {
+					if (color_or_h.length &gt;= 4) {
 						in_a = color_or_h[3];
 					}
 				}
 			} else {
-				throw "newColorNormalizedHSV";
+				throw &quot;newColorNormalizedHSV&quot;;
 			}
 		} else {
-			if (arguments.length >= 3) {
+			if (arguments.length &gt;= 3) {
 				in_h = arguments[0];
 				in_s = s;
 				in_v = v;
 			}
-			if (arguments.length >= 4) {
+			if (arguments.length &gt;= 4) {
 				in_a = a;
 			}
 		}
-		// HSVの計算上この時点でLimitさせる
+		// HSV&#x306E;&#x8A08;&#x7B97;&#x4E0A;&#x3053;&#x306E;&#x6642;&#x70B9;&#x3067;Limit&#x3055;&#x305B;&#x308B;
 		in_s = NTColor._limit(in_s);
 		in_v = NTColor._limit(in_v);
 		const color = new NTColor();
@@ -888,7 +928,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 指定した 0...360, 0...255 の色情報からオブジェクトを作成する
+	 * &#x6307;&#x5B9A;&#x3057;&#x305F; 0...360, 0...255 &#x306E;&#x8272;&#x60C5;&#x5831;&#x304B;&#x3089;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x4F5C;&#x6210;&#x3059;&#x308B;
 	 * @param {number|NTColorInputColorHSVA|number[]} color_or_h
 	 * @param {number} [s]
 	 * @param {number} [v]
@@ -900,31 +940,31 @@ export default class NTColor {
 		let in_s = 0.0;
 		let in_v = 0.0;
 		let in_a = 255.0;
-		if (arguments.length <= 2) {
-			if (typeof color_or_h === "object") {
+		if (arguments.length &lt;= 2) {
+			if (typeof color_or_h === &quot;object&quot;) {
 				if (!Array.isArray(color_or_h)) {
 					if (color_or_h.h !== undefined) in_h = color_or_h.h;
 					if (color_or_h.s !== undefined) in_s = color_or_h.s;
 					if (color_or_h.v !== undefined) in_v = color_or_h.v;
 					if (color_or_h.a !== undefined) in_a = color_or_h.a;
 				} else {
-					if (color_or_h.length >= 3) {
+					if (color_or_h.length &gt;= 3) {
 						in_h = color_or_h[0];
 						in_s = color_or_h[1];
 						in_v = color_or_h[2];
 					}
-					if (color_or_h.length >= 4) {
+					if (color_or_h.length &gt;= 4) {
 						in_a = color_or_h[3];
 					}
 				}
 			} else {
-				throw "newColorNormalizedRGB";
+				throw &quot;newColorNormalizedRGB&quot;;
 			}
-		} else if (arguments.length >= 3) {
+		} else if (arguments.length &gt;= 3) {
 			in_h = arguments[0];
 			in_s = s;
 			in_v = v;
-			if (arguments.length >= 4) {
+			if (arguments.length &gt;= 4) {
 				in_a = a;
 			}
 		}
@@ -932,7 +972,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 色の型情報
+	 * &#x8272;&#x306E;&#x578B;&#x60C5;&#x5831;
 	 * @typedef {Object} NTColorInputColorHSLA
 	 * @property {number} [h]
 	 * @property {number} [s]
@@ -941,7 +981,7 @@ export default class NTColor {
 	 */
 
 	/**
-	 * 指定した 0...1 の色情報からオブジェクトを作成する
+	 * &#x6307;&#x5B9A;&#x3057;&#x305F; 0...1 &#x306E;&#x8272;&#x60C5;&#x5831;&#x304B;&#x3089;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x4F5C;&#x6210;&#x3059;&#x308B;
 	 * @param {number|NTColorInputColorHSLA|number[]} color_or_h
 	 * @param {number} [s]
 	 * @param {number} [l]
@@ -954,36 +994,36 @@ export default class NTColor {
 		let in_l = 0.0;
 		let in_a = 1.0;
 		if (arguments.length === 1) {
-			if (typeof color_or_h === "object") {
+			if (typeof color_or_h === &quot;object&quot;) {
 				if (!Array.isArray(color_or_h)) {
 					if (color_or_h.h !== undefined) in_h = color_or_h.h;
 					if (color_or_h.s !== undefined) in_s = color_or_h.s;
 					if (color_or_h.l !== undefined) in_l = color_or_h.l;
 					if (color_or_h.a !== undefined) in_a = color_or_h.a;
 				} else {
-					if (color_or_h.length >= 3) {
+					if (color_or_h.length &gt;= 3) {
 						in_h = color_or_h[0];
 						in_s = color_or_h[1];
 						in_l = color_or_h[2];
 					}
-					if (color_or_h.length >= 4) {
+					if (color_or_h.length &gt;= 4) {
 						in_a = color_or_h[3];
 					}
 				}
 			} else {
-				throw "newColorNormalizedHSL";
+				throw &quot;newColorNormalizedHSL&quot;;
 			}
 		} else {
-			if (arguments.length >= 3) {
+			if (arguments.length &gt;= 3) {
 				in_h = arguments[0];
 				in_s = s;
 				in_l = l;
 			}
-			if (arguments.length >= 4) {
+			if (arguments.length &gt;= 4) {
 				in_a = a;
 			}
 		}
-		// HLSの計算上この時点でLimitさせる
+		// HLS&#x306E;&#x8A08;&#x7B97;&#x4E0A;&#x3053;&#x306E;&#x6642;&#x70B9;&#x3067;Limit&#x3055;&#x305B;&#x308B;
 		in_s = NTColor._limit(in_s);
 		in_l = NTColor._limit(in_l);
 		const color = new NTColor();
@@ -992,7 +1032,7 @@ export default class NTColor {
 	}
 
 	/**
-	 * 指定した 0...360, 0...255 の色情報からオブジェクトを作成する
+	 * &#x6307;&#x5B9A;&#x3057;&#x305F; 0...360, 0...255 &#x306E;&#x8272;&#x60C5;&#x5831;&#x304B;&#x3089;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x4F5C;&#x6210;&#x3059;&#x308B;
 	 * @param {number|NTColorInputColorHSLA|number[]} color_or_h
 	 * @param {number} s
 	 * @param {number} l
@@ -1004,31 +1044,31 @@ export default class NTColor {
 		let in_s = 0.0;
 		let in_l = 0.0;
 		let in_a = 255.0;
-		if (arguments.length <= 2) {
-			if (typeof color_or_h === "object") {
+		if (arguments.length &lt;= 2) {
+			if (typeof color_or_h === &quot;object&quot;) {
 				if (!Array.isArray(color_or_h)) {
 					if (color_or_h.h !== undefined) in_h = color_or_h.h;
 					if (color_or_h.s !== undefined) in_s = color_or_h.s;
 					if (color_or_h.l !== undefined) in_l = color_or_h.l;
 					if (color_or_h.a !== undefined) in_a = color_or_h.a;
 				} else {
-					if (color_or_h.length >= 3) {
+					if (color_or_h.length &gt;= 3) {
 						in_h = color_or_h[0];
 						in_s = color_or_h[1];
 						in_l = color_or_h[2];
 					}
-					if (color_or_h.length >= 4) {
+					if (color_or_h.length &gt;= 4) {
 						in_a = color_or_h[3];
 					}
 				}
 			} else {
-				throw "newColorNormalizedRGB";
+				throw &quot;newColorNormalizedRGB&quot;;
 			}
-		} else if (arguments.length >= 3) {
+		} else if (arguments.length &gt;= 3) {
 			in_h = arguments[0];
 			in_s = s;
 			in_l = l;
-			if (arguments.length >= 4) {
+			if (arguments.length &gt;= 4) {
 				in_a = a;
 			}
 		}
@@ -1139,3 +1179,20 @@ export default class NTColor {
 		return NTColor.newColorRGB(0x0000ff);
 	}
 }
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

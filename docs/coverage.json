@@ -1,0 +1,12 @@
+{
+  "coverage": "100%",
+  "expectCount": 71,
+  "actualCount": 71,
+  "files": {
+    "src/NTColor.js": {
+      "expectCount": 71,
+      "actualCount": 71,
+      "undocumentLines": []
+    }
+  }
+}
