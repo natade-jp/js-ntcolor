@@ -37,15 +37,51 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="ntcolor">NTColor</h1><p><a href="https://natade-jp.github.io/js-ntcolor/docs/"><img src="https://natade-jp.github.io/js-ntcolor/docs/badge.svg" alt="ESDoc coverage badge"></a>
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="ntcolor">NTColor</h1><p><a href="https://natade-jp.github.io/js-ntcolor/"><img src="https://natade-jp.github.io/js-ntcolor/badge.svg" alt="ESDoc coverage badge"></a>
 <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="MIT License"></p>
 <ul>
 <li>JavaScript&#x3067;&#x8272;&#x60C5;&#x5831;&#x3092;&#x6271;&#x3046;</li>
 </ul>
 <h1 id="install">Install</h1><pre><code class="lang-sh"><code class="source-code prettyprint">npm install --save-dev ntcolor</code>
 </code></pre>
+<h1 id="use">Use</h1><pre><code class="lang-javascript"><code class="source-code prettyprint">import NTColor from &quot;ntcolor&quot;;</code>
+</code></pre>
 <h1 id="docs">Docs</h1><p><a href="https://natade-jp.github.io/js-ntcolor/">https://natade-jp.github.io/js-ntcolor/</a></p>
-<h1 id="example">Example</h1><pre><code class="lang-javascript"><code class="source-code prettyprint">import NTColor from &quot;ntcolor&quot;;</code>
+<h1 id="example">Example</h1><pre><code class="lang-javascript"><code class="source-code prettyprint">&gt; console.log(NTColor.newColorRGB(0x20, 0x40, 0x80).toAARRGGBB());
+0xff204080
+
+&gt; console.log(NTColor.newColorRGB([0x20, 0x40, 0x80]).toAARRGGBB());
+0xff204080
+
+&gt; console.log(NTColor.newColorRGB({ r: 0x20, g: 0x40, b: 0x80 }).toRRGGBB());
+0x204080
+
+&gt; console.log(NTColor.newColorRGB({ r: 0x20, g: 0x40, b: 0x80, a: 0x00 }).toAARRGGBB());
+0x00204080
+
+&gt; console.log(NTColor.newColorNormalizedRGB(0.0, 0.5, 1.0).toAARRGGBB());
+0xff0080ff
+
+&gt; console.log(NTColor.newColorNormalizedRGB(0.0, 0.5, 1.0, 0.0).toAARRGGBB());
+0x000080ff
+
+&gt; console.log(NTColor.newColorRGB(0x204080).toCSS255());
+rgb(32,64,128)
+
+&gt; console.log(NTColor.newColorRGB(0x80204080).toCSS255());
+rgba(32,64,128,0.502)
+
+&gt; console.log(NTColor.newColorRGB(0x204080).toCSSHex());
+#204080
+
+&gt; console.log(NTColor.newColorRGB(0x12345678).toCSSHex());
+#12345678
+
+&gt; console.log(NTColor.newColorRGB(0x204080).toCSSPercent());
+rgb(13%,25%,50%)
+
+&gt; console.log(NTColor.newColorRGB(0x12345678).toCSSPercent());
+rgba(20%,34%,47%,7%)</code>
 </code></pre>
 </div>
 </div>
