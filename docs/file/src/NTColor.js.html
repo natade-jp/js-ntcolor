@@ -539,7 +539,6 @@ export default class NTColor {
 	/**
 	 * [0.0,1.0] &#x306B;&#x6B63;&#x898F;&#x5316;&#x3055;&#x308C;&#x305F; HSV &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {{h: number, s: number, v: number, a: number}}
-	 * @private
 	 */
 	toNormalizedHSV() {
 		return this._getHSV();
@@ -548,7 +547,6 @@ export default class NTColor {
 	/**
 	 * [0,255] &#x306E; HSV &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;&#x3002;&#x305F;&#x3060;&#x3057;&#x8272;&#x76F8;&#x306F; [0,359] &#x3068;&#x3059;&#x308B;&#x3002;
 	 * @returns {{h: number, s: number, v: number, a: number}}
-	 * @private
 	 */
 	toHSV() {
 		const color = this.toNormalizedHSV();
@@ -562,7 +560,6 @@ export default class NTColor {
 	/**
 	 * [0.0,1.0] &#x306B;&#x6B63;&#x898F;&#x5316;&#x3055;&#x308C;&#x305F; HSL &#x306E;&#x5024;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;
 	 * @returns {{h: number, s: number, l: number, a: number}}
-	 * @private
 	 */
 	toNormalizedHSL() {
 		return this._getHSL();

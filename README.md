@@ -3,7 +3,9 @@
 ![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)
 
 - JavaScriptで色情報を扱う
+- [github](https://github.com/natade-jp/js-ntcolor)
 - [npm](https://www.npmjs.com/package/ntcolor)
+- [esdoc](https://natade-jp.github.io/js-ntcolor/)
 
 # Install
 
@@ -16,10 +18,6 @@ npm install --save-dev ntcolor
 ```javascript
 import NTColor from "ntcolor";
 ```
-
-# Docs
-
-https://natade-jp.github.io/js-ntcolor/
 
 # Example
 

@@ -499,7 +499,6 @@ class NTColor {
 	/**
 	 * [0.0,1.0] に正規化された HSV の値を取得する
 	 * @returns {{h: number, s: number, v: number, a: number}}
-	 * @private
 	 */
 	toNormalizedHSV() {
 		return this._getHSV();
@@ -508,7 +507,6 @@ class NTColor {
 	/**
 	 * [0,255] の HSV の値を取得する。ただし色相は [0,359] とする。
 	 * @returns {{h: number, s: number, v: number, a: number}}
-	 * @private
 	 */
 	toHSV() {
 		const color = this.toNormalizedHSV();
@@ -522,7 +520,6 @@ class NTColor {
 	/**
 	 * [0.0,1.0] に正規化された HSL の値を取得する
 	 * @returns {{h: number, s: number, l: number, a: number}}
-	 * @private
 	 */
 	toNormalizedHSL() {
 		return this._getHSL();

@@ -500,7 +500,6 @@ NTColor.prototype.toAARRGGBB = function toAARRGGBB () {
 /**
 	 * [0.0,1.0] に正規化された HSV の値を取得する
 	 * @returns {{h: number, s: number, v: number, a: number}}
-	 * @private
 	 */
 NTColor.prototype.toNormalizedHSV = function toNormalizedHSV () {
 	return this._getHSV();
@@ -509,7 +508,6 @@ NTColor.prototype.toNormalizedHSV = function toNormalizedHSV () {
 /**
 	 * [0,255] の HSV の値を取得する。ただし色相は [0,359] とする。
 	 * @returns {{h: number, s: number, v: number, a: number}}
-	 * @private
 	 */
 NTColor.prototype.toHSV = function toHSV () {
 	var color = this.toNormalizedHSV();
@@ -523,7 +521,6 @@ NTColor.prototype.toHSV = function toHSV () {
 /**
 	 * [0.0,1.0] に正規化された HSL の値を取得する
 	 * @returns {{h: number, s: number, l: number, a: number}}
-	 * @private
 	 */
 NTColor.prototype.toNormalizedHSL = function toNormalizedHSL () {
 	return this._getHSL();
