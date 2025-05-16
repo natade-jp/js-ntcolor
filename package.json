@@ -26,6 +26,7 @@
 		"build": "node ./scripts/package.build.js",
 		"test": "jest",
 		"test_target": "node ./scripts/package.test.js",
+		"dts": "npx tsc -p tsconfig.json",
 		"doc": "node ./scripts/package.doc.js"
 	},
 	"directories": {
