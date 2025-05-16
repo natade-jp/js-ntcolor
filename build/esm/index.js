@@ -1,8 +1,8 @@
 /**
- * The script is part of SenkoJS.
+ * NTColor.js
  *
  * AUTHOR:
- *  natade (http://twitter.com/natadea)
+ *  natade (https://github.com/natade-jp)
  *
  * LICENSE:
  *  The MIT license https://opensource.org/licenses/MIT

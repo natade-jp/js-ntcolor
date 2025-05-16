@@ -1,6 +1,6 @@
 {
 	"name": "ntcolor",
-	"version": "2.0.2",
+	"version": "2.0.3",
 	"description": "Library for using color information in JavaScript.",
 	"keywords": [
 		"color"
@@ -13,6 +13,7 @@
 	"license": "MIT",
 	"source": "./src/index.js",
 	"main": "./build/esm/index.js",
+	"types": "./build/dts/index.d.ts",
 	"exports": {
 		".": {
 			"browser": "./build/umd/index.js",
